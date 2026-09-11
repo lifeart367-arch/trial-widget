@@ -152,6 +152,10 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                 errorViews.setTextViewText(
                         R.id.widget_temperature,
                         "Weather unavailable");
+                errorViews.setInt(
+                        R.id.widget_root,
+                       "setBackgroundResource",
+                        R.drawable.weather_cloudy);
 
                 manager.updateAppWidget(
                         widgetId,
