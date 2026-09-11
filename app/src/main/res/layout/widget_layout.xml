@@ -2,48 +2,51 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="18dp"
-    android:background="#141419">
+    android:background="@drawable/weather_clear">
 
     <TextView
         android:id="@+id/widget_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="23:47"
+        android:text="00:03"
         android:textColor="#FFFFFF"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:includeFontPadding="false" />
 
     <TextView
         android:id="@+id/widget_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Fri, 11 Sep"
-        android:textColor="#CCCCCC"
+        android:layout_marginTop="5dp"
+        android:text="Sat, 12 Sept"
+        android:textColor="#E8EEF5"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/widget_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="18dp"
         android:text="Bhubaneswar"
         android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:includeFontPadding="false" />
 
     <TextView
         android:id="@+id/widget_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="28°C • Clear"
-        android:textColor="#CCCCCC"
-        android:textSize="14sp" />
+        android:layout_marginTop="5dp"
+        android:text="25°C • Showers"
+        android:textColor="#F2F6FA"
+        android:textSize="15sp" />
 
 </LinearLayout>
