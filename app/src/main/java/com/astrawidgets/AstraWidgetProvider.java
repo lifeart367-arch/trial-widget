@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.IOException;
 
 public class AstraWidgetProvider extends AppWidgetProvider {
 
@@ -72,11 +73,19 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);
                 connection.setReadTimeout(10000);
+                connection.setRequestProperty("User-Agent", "AstraWidgets/1.0");
 
-                BufferedReader reader =
-                        new BufferedReader(
-                                new InputStreamReader(
-                                        connection.getInputStream()));
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode != HttpURLConnection.HTTP_OK) {
+                 throw new IOException(
+                "Weather API HTTP " + responseCode);
+             }
+
+BufferedReader reader =
+        new BufferedReader(
+                new InputStreamReader(
+                        connection.getInputStream()));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -144,8 +153,8 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                                 R.layout.widget_layout);
 
                 errorViews.setTextViewText(
-                        R.id.widget_temperature,
-                        "Weather unavailable");
+                         R.id.widget_temperature,
+                         "Weather error: " + e.getClass().getSimpleName());
                 errorViews.setInt(
                         R.id.widget_root,
                        "setBackgroundResource",
