@@ -125,6 +125,10 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                 updatedViews.setTextViewText(
                         R.id.widget_location,
                         "Bhubaneswar");
+                updatedViews.setInt(
+                        R.id.widget_root,
+                        "setBackgroundResource",
+                        getWeatherBackground(weatherCode));
 
                 updatedViews.setTextViewText(
                         R.id.widget_temperature,
@@ -175,5 +179,33 @@ public class AstraWidgetProvider extends AppWidgetProvider {
         }
 
         return "Weather";
+            
+    }
+
+    private int getWeatherBackground(int code) {
+
+        if (code == 0) {
+            return R.drawable.weather_clear;
+
+        } else if (code <= 3) {
+            return R.drawable.weather_cloudy;
+
+        } else if (code == 45 || code == 48) {
+            return R.drawable.weather_fog;
+
+        } else if (code >= 51 && code <= 67) {
+            return R.drawable.weather_rain;
+
+        } else if (code >= 71 && code <= 77) {
+            return R.drawable.weather_cloudy;
+
+        } else if (code >= 80 && code <= 82) {
+            return R.drawable.weather_rain;
+
+        } else if (code >= 95) {
+            return R.drawable.weather_storm;
+        }
+
+        return R.drawable.weather_cloudy;
     }
 }
