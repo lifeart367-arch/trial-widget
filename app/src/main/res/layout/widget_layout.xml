@@ -10,7 +10,7 @@
     android:padding="18dp"
     android:background="@drawable/weather_clear">
 
-    <TextView
+    <TextClock
         android:id="@+id/widget_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,9 @@
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:includeFontPadding="false" />
+        android:includeFontPadding="false"
+        android:format24Hour="HH:mm"
+        android:format12Hour="hh:mm a"  />
 
     <TextView
         android:id="@+id/widget_date"
