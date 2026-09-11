@@ -43,15 +43,13 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                         context.getPackageName(),
                         R.layout.widget_layout);
 
-        String time = new SimpleDateFormat(
-                "HH:mm",
-                Locale.getDefault()).format(new Date());
+        
 
         String date = new SimpleDateFormat(
                 "EEE, dd MMM",
                 Locale.getDefault()).format(new Date());
 
-        views.setTextViewText(R.id.widget_time, time);
+        
         views.setTextViewText(R.id.widget_date, date);
         views.setTextViewText(R.id.widget_location, "Bhubaneswar");
         views.setTextViewText(R.id.widget_temperature, "Loading...");
@@ -110,11 +108,7 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                                 context.getPackageName(),
                                 R.layout.widget_layout);
 
-                updatedViews.setTextViewText(
-                        R.id.widget_time,
-                        new SimpleDateFormat(
-                                "HH:mm",
-                                Locale.getDefault()).format(new Date()));
+            
 
                 updatedViews.setTextViewText(
                         R.id.widget_date,
