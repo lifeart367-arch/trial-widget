@@ -102,6 +102,9 @@ attachRefreshButton(
         context,
         views,
         widgetId);
+applyReflection(
+        context,
+        views);
 
         String date =
                 new SimpleDateFormat(
@@ -257,6 +260,10 @@ attachRefreshButton(
         context,
         updatedViews,
         widgetId);
+applyReflection(
+        context,
+        updatedViews);
+
                 // DATE
 
                 updatedViews.setTextViewText(
@@ -354,6 +361,9 @@ attachRefreshButton(
         context,
         errorViews,
         widgetId);
+applyReflection(
+        context,
+        errorViews);
                 errorViews.setTextViewText(
                         R.id.widget_temperature,
                         "—°");
@@ -524,5 +534,41 @@ private void attachRefreshButton(
     views.setOnClickPendingIntent(
             R.id.widget_refresh,
             refreshPendingIntent);
+}
+private void applyReflection(
+        Context context,
+        RemoteViews views) {
+
+    SharedPreferences preferences =
+            context.getSharedPreferences(
+                    "astra_weather",
+                    Context.MODE_PRIVATE);
+
+    int reflection =
+            preferences.getInt(
+                    "reflection",
+                    1);
+
+    int drawable;
+
+    if (reflection == 0) {
+
+        drawable =
+                R.drawable.widget_reflection_left;
+
+    } else if (reflection == 2) {
+
+        drawable =
+                R.drawable.widget_reflection_right;
+
+    } else {
+
+        drawable =
+                R.drawable.widget_reflection;
+    }
+
+    views.setImageViewResource(
+            R.id.widget_reflection,
+            drawable);
 }
 }
