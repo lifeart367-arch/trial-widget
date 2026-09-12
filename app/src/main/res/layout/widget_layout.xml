@@ -6,58 +6,251 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="18dp"
+    android:padding="16dp"
     android:background="@drawable/weather_clear">
 
-    <!-- Live clock -->
-    <TextClock
-        android:id="@+id/widget_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="08:07"
-        android:textColor="#FFFFFF"
-        android:textSize="38sp"
-        android:textStyle="bold"
-        android:fontFamily="sans"
-        android:includeFontPadding="false"
-        android:format24Hour="HH:mm"
-        android:format12Hour="hh:mm a" />
+    <!-- TOP BAR -->
 
-    <!-- Date -->
-    <TextView
-        android:id="@+id/widget_date"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Sat, 12 Sept"
-        android:textColor="#DCE7F5"
-        android:textSize="14sp"
-        android:fontFamily="sans"
-        android:includeFontPadding="false" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <!-- Location -->
-    <TextView
-        android:id="@+id/widget_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Narla"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="sans"
-        android:includeFontPadding="false" />
+        <TextView
+            android:id="@+id/widget_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sat, 12 Sept"
+            android:textColor="#DCE8F7"
+            android:textSize="13sp"
+            android:fontFamily="sans"
+            android:includeFontPadding="false" />
 
-    <!-- Temperature + condition -->
+        <TextClock
+            android:id="@+id/widget_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:51"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:fontFamily="sans"
+            android:includeFontPadding="false"
+            android:format24Hour="HH:mm"
+            android:format12Hour="hh:mm" />
+
+    </LinearLayout>
+
+
+    <!-- MAIN WEATHER AREA -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <!-- WEATHER ICON -->
+
+        <TextView
+            android:id="@+id/widget_weather_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="☁"
+            android:textColor="#FFFFFF"
+            android:textSize="58sp"
+            android:fontFamily="sans"
+            android:includeFontPadding="false" />
+
+
+        <!-- WEATHER INFORMATION -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Narla"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="sans"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/widget_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="26°"
+                android:textColor="#FFFFFF"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                android:fontFamily="sans"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/widget_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rain"
+                android:textColor="#E5EFFC"
+                android:textSize="15sp"
+                android:fontFamily="sans"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/widget_feels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Feels like 29°"
+                android:textColor="#C7D6EA"
+                android:textSize="12sp"
+                android:fontFamily="sans"
+                android:includeFontPadding="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- FROSTED GLASS FORECAST PANEL -->
+
+    <LinearLayout
+        android:id="@+id/widget_forecast_panel"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@drawable/widget_glass">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TODAY"
+                android:textColor="#DCE8F7"
+                android:textSize="9sp"
+                android:fontFamily="sans" />
+
+            <TextView
+                android:id="@+id/widget_forecast_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="26°"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="sans" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="34dp"
+            android:background="#45FFFFFF" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOMORROW"
+                android:textColor="#DCE8F7"
+                android:textSize="9sp"
+                android:fontFamily="sans" />
+
+            <TextView
+                android:id="@+id/widget_forecast_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="—"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="sans" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="34dp"
+            android:background="#45FFFFFF" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEXT"
+                android:textColor="#DCE8F7"
+                android:textSize="9sp"
+                android:fontFamily="sans" />
+
+            <TextView
+                android:id="@+id/widget_forecast_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="—"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="sans" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- ASTRA BRANDING -->
+
     <TextView
-        android:id="@+id/widget_temperature"
-        android:layout_width="wrap_content"
+        android:id="@+id/widget_brand"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="25°C • Rain"
-        android:textColor="#F5F8FC"
-        android:textSize="17sp"
+        android:layout_marginTop="8dp"
+        android:text="ASTRA  •  WEATHER"
+        android:textColor="#BFD0E5"
+        android:textSize="9sp"
+        android:letterSpacing="0.15"
+        android:gravity="center"
         android:fontFamily="sans"
         android:includeFontPadding="false" />
 
