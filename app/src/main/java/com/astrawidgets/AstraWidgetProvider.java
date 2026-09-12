@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+import android.content.SharedPreferences;
 
 import org.json.JSONObject;
 
@@ -52,7 +53,7 @@ public class AstraWidgetProvider extends AppWidgetProvider {
 
         
         views.setTextViewText(R.id.widget_date, date);
-        views.setTextViewText(R.id.widget_location, "Bhubaneswar");
+        views.setTextViewText(R.id.widget_location, city);
         views.setTextViewText(R.id.widget_temperature, "Loading...");
 
         manager.updateAppWidget(widgetId, views);
@@ -60,12 +61,32 @@ public class AstraWidgetProvider extends AppWidgetProvider {
         EXECUTOR.execute(() -> {
             try {
 
-                URL url = new URL(
-                        "https://api.open-meteo.com/v1/forecast"
-                        + "?latitude=20.2961"
-                        + "&longitude=85.8245"
-                        + "&current=temperature_2m,apparent_temperature,weather_code"
-                        + "&timezone=auto");
+                SharedPreferences preferences =
+        context.getSharedPreferences(
+                "astra_weather",
+                Context.MODE_PRIVATE);
+
+String city =
+        preferences.getString(
+                "city",
+                "Bhubaneswar");
+
+float latitude =
+        preferences.getFloat(
+                "latitude",
+                20.2961f);
+
+float longitude =
+        preferences.getFloat(
+                "longitude",
+                85.8245f);
+
+URL url = new URL(
+        "https://api.open-meteo.com/v1/forecast"
+        + "?latitude=" + latitude
+        + "&longitude=" + longitude
+        + "&current=temperature_2m,apparent_temperature,weather_code"
+        + "&timezone=auto");
 
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
@@ -126,8 +147,8 @@ BufferedReader reader =
                                 Locale.getDefault()).format(new Date()));
 
                 updatedViews.setTextViewText(
-                        R.id.widget_location,
-                        "Bhubaneswar");
+        R.id.widget_location,
+        city);
                 updatedViews.setInt(
                         R.id.widget_root,
                         "setBackgroundResource",
