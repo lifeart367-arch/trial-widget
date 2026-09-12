@@ -270,14 +270,16 @@
 
 </LinearLayout>
         <TextView
-            android:id="@+id/widget_brand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="ASTRA  •  WEATHER"
-            android:textColor="#BFD0E5"
-            android:textSize="8sp" />
+    android:id="@+id/widget_brand"
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:gravity="center"
+    android:text="ASTRA  ·  WEATHER"
+    android:textColor="#90FFFFFF"
+    android:textSize="7sp"
+    android:textStyle="bold"
+    android:letterSpacing="0.16"
+    android:includeFontPadding="false" />
 
     </LinearLayout>
 
