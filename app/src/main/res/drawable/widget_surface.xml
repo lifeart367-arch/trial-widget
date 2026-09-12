@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transparent glass body -->
+    <item>
+        <shape android:shape="rectangle">
+
+            <solid
+                android:color="#28FFFFFF" />
+
+            <corners
+                android:radius="28dp" />
+
+            <stroke
+                android:width="1dp"
+                android:color="#75FFFFFF" />
+
+        </shape>
+    </item>
+
+    <!-- Soft top reflection -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="55dp">
+
+        <shape android:shape="rectangle">
+
+            <gradient
+                android:angle="90"
+                android:startColor="#30FFFFFF"
+                android:endColor="#00FFFFFF" />
+
+            <corners
+                android:radius="26dp" />
+
+        </shape>
+    </item>
+
+</layer-list>
