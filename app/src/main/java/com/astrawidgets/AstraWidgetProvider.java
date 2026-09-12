@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
 import android.content.SharedPreferences;
+import android.app.PendingIntent;
+import android.content.Intent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,10 +23,37 @@ import java.util.concurrent.Executors;
 import java.io.IOException;
 
 public class AstraWidgetProvider extends AppWidgetProvider {
+private static final String ACTION_REFRESH =
+        "com.astrawidgets.ACTION_REFRESH";
 
     private static final ExecutorService EXECUTOR =
             Executors.newSingleThreadExecutor();
+@Override
+public void onReceive(
+        Context context,
+        Intent intent) {
 
+    super.onReceive(context, intent);
+
+    if (ACTION_REFRESH.equals(intent.getAction())) {
+
+        AppWidgetManager manager =
+                AppWidgetManager.getInstance(context);
+
+        android.content.ComponentName component =
+                new android.content.ComponentName(
+                        context,
+                        AstraWidgetProvider.class);
+
+        int[] widgetIds =
+                manager.getAppWidgetIds(component);
+
+        onUpdate(
+                context,
+                manager,
+                widgetIds);
+    }
+}
     @Override
     public void onUpdate(
             Context context,
@@ -68,6 +97,23 @@ public class AstraWidgetProvider extends AppWidgetProvider {
                 new RemoteViews(
                         context.getPackageName(),
                         R.layout.widget_layout);
+
+Intent refreshIntent =
+        new Intent(context, AstraWidgetProvider.class);
+
+refreshIntent.setAction(ACTION_REFRESH);
+
+PendingIntent refreshPendingIntent =
+        PendingIntent.getBroadcast(
+                context,
+                widgetId,
+                refreshIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+                        | PendingIntent.FLAG_IMMUTABLE);
+
+views.setOnClickPendingIntent(
+        R.id.widget_refresh,
+        refreshPendingIntent);
 
         String date =
                 new SimpleDateFormat(
@@ -418,7 +464,7 @@ public class AstraWidgetProvider extends AppWidgetProvider {
 
         }
 
-        return "☁";
+        return "☁️";
     }
 
     private int getWeatherBackground(
