@@ -110,92 +110,110 @@
         </LinearLayout>
 
         <!-- Forecast glass -->
-        <LinearLayout
-            android:id="@+id/widget_forecast_panel"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="5dp"
-            android:background="@drawable/widget_glass">
+        
+<LinearLayout
+    android:id="@+id/widget_forecast_panel"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="2dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+    <!-- Today -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginEnd="4dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:background="@drawable/widget_glass">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TODAY"
-                    android:textColor="#DCE8F7"
-                    android:textSize="8sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TODAY"
+            android:textColor="#CFE0F2"
+            android:textSize="8sp"
+            android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/widget_forecast_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="26° / 30°"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/widget_forecast_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="26° / 30°"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            </LinearLayout>
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+    <!-- Tomorrow -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:background="@drawable/widget_glass">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TOMORROW"
-                    android:textColor="#DCE8F7"
-                    android:textSize="8sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TOMORROW"
+            android:textColor="#CFE0F2"
+            android:textSize="8sp"
+            android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/widget_forecast_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="25° / 31°"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/widget_forecast_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="25° / 31°"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            </LinearLayout>
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+    <!-- Next -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:background="@drawable/widget_glass">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NEXT"
-                    android:textColor="#DCE8F7"
-                    android:textSize="8sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEXT"
+            android:textColor="#CFE0F2"
+            android:textSize="8sp"
+            android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/widget_forecast_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="25° / 30°"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/widget_forecast_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="25° / 30°"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            </LinearLayout>
+    </LinearLayout>
 
-        </LinearLayout>
-
+</LinearLayout>
         <TextView
             android:id="@+id/widget_brand"
             android:layout_width="match_parent"
