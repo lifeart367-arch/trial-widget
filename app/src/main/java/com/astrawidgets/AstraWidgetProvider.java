@@ -25,7 +25,8 @@ import java.io.IOException;
 public class AstraWidgetProvider extends AppWidgetProvider {
 private static final String ACTION_REFRESH =
         "com.astrawidgets.ACTION_REFRESH";
-
+private static final String ACTION_REFLECTION =
+        "com.astrawidgets.ACTION_REFLECTION";
     private static final ExecutorService EXECUTOR =
             Executors.newSingleThreadExecutor();
 @Override
@@ -53,6 +54,17 @@ public void onReceive(
                 manager,
                 widgetIds);
     }
+}
+if (ACTION_REFLECTION.equals(intent.getAction())) {
+
+    int reflection =
+            intent.getIntExtra(
+                    "reflection",
+                    1);
+
+    updateReflection(
+            context,
+            reflection);
 }
     @Override
     public void onUpdate(
@@ -570,5 +582,68 @@ private void applyReflection(
     views.setImageViewResource(
             R.id.widget_reflection,
             drawable);
+}
+private void updateReflection(
+        Context context,
+        int reflection) {
+
+    AppWidgetManager manager =
+            AppWidgetManager.getInstance(context);
+
+    android.content.ComponentName component =
+            new android.content.ComponentName(
+                    context,
+                    AstraWidgetProvider.class);
+
+    int[] widgetIds =
+            manager.getAppWidgetIds(component);
+
+    if (widgetIds.length == 0) {
+        return;
+    }
+
+    int drawable;
+
+    if (reflection == 0) {
+
+        drawable =
+                R.drawable.widget_reflection_left;
+
+    } else if (reflection == 2) {
+
+        drawable =
+                R.drawable.widget_reflection_right;
+
+    } else {
+
+        drawable =
+                R.drawable.widget_reflection;
+    }
+
+    // Remember the reflection position.
+    context.getSharedPreferences(
+            "astra_weather",
+            Context.MODE_PRIVATE)
+            .edit()
+            .putInt(
+                    "reflection",
+                    reflection)
+            .apply();
+
+    RemoteViews views =
+            new RemoteViews(
+                    context.getPackageName(),
+                    R.layout.widget_layout);
+
+    views.setImageViewResource(
+            R.id.widget_reflection,
+            drawable);
+
+    for (int widgetId : widgetIds) {
+
+        manager.partiallyUpdateAppWidget(
+                widgetId,
+                views);
+    }
 }
 }
