@@ -724,6 +724,7 @@ if (sensorManager != null) {
 
             sendBroadcast(intent);
         }
+}
     @Override
     protected void onResume() {
 
