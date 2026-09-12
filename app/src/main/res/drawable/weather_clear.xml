@@ -3,26 +3,27 @@
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Deep atmospheric base -->
+    <!-- Atmospheric sky -->
     <item>
         <shape android:shape="rectangle">
 
             <gradient
                 android:angle="135"
-                android:startColor="#0D47A1"
-                android:centerColor="#1976D2"
-                android:endColor="#64B5F6" />
+                android:startColor="#0A356F"
+                android:centerColor="#1766A8"
+                android:endColor="#5CA8D8" />
 
-            <corners android:radius="28dp" />
+            <corners
+                android:radius="28dp" />
 
         </shape>
     </item>
 
-    <!-- Soft sunlight glow -->
+    <!-- Soft sunlight -->
     <item
-        android:left="70dp"
-        android:top="-35dp"
-        android:right="-35dp"
+        android:left="65dp"
+        android:top="-40dp"
+        android:right="-40dp"
         android:bottom="45dp">
 
         <shape android:shape="oval">
@@ -31,19 +32,19 @@
                 android:type="radial"
                 android:centerX="50%"
                 android:centerY="50%"
-                android:gradientRadius="100dp"
-                android:startColor="#55FFFFFF"
+                android:gradientRadius="105dp"
+                android:startColor="#65FFFFFF"
                 android:endColor="#00FFFFFF" />
 
         </shape>
 
     </item>
 
-    <!-- Subtle lower atmospheric glow -->
+    <!-- Lower atmospheric glow -->
     <item
         android:left="-50dp"
-        android:top="90dp"
-        android:right="80dp"
+        android:top="85dp"
+        android:right="70dp"
         android:bottom="-60dp">
 
         <shape android:shape="oval">
@@ -52,9 +53,49 @@
                 android:type="radial"
                 android:centerX="50%"
                 android:centerY="50%"
-                android:gradientRadius="120dp"
-                android:startColor="#25FFFFFF"
+                android:gradientRadius="125dp"
+                android:startColor="#30FFFFFF"
                 android:endColor="#00FFFFFF" />
+
+        </shape>
+
+    </item>
+
+    <!-- Frosted glass veil -->
+    <item>
+
+        <shape android:shape="rectangle">
+
+            <solid
+                android:color="#18FFFFFF" />
+
+            <corners
+                android:radius="28dp" />
+
+            <stroke
+                android:width="1dp"
+                android:color="#55FFFFFF" />
+
+        </shape>
+
+    </item>
+
+    <!-- Subtle glass highlight -->
+    <item
+        android:left="8dp"
+        android:top="6dp"
+        android:right="8dp"
+        android:bottom="70dp">
+
+        <shape android:shape="rectangle">
+
+            <gradient
+                android:angle="90"
+                android:startColor="#20FFFFFF"
+                android:endColor="#00FFFFFF" />
+
+            <corners
+                android:radius="24dp" />
 
         </shape>
 
