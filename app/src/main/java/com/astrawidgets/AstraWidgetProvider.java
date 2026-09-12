@@ -54,7 +54,7 @@ public void onReceive(
                 manager,
                 widgetIds);
     }
-}
+
 if (ACTION_REFLECTION.equals(intent.getAction())) {
 
     int reflection =
@@ -65,6 +65,7 @@ if (ACTION_REFLECTION.equals(intent.getAction())) {
     updateReflection(
             context,
             reflection);
+}
 }
     @Override
     public void onUpdate(
