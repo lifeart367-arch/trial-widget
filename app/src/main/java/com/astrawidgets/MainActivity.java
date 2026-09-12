@@ -724,5 +724,101 @@ if (sensorManager != null) {
 
             sendBroadcast(intent);
         }
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        if (sensorManager != null &&
+                gyroscope != null) {
+
+            sensorManager.registerListener(
+                    this,
+                    gyroscope,
+                    SensorManager.SENSOR_DELAY_UI);
+        }
     }
-}
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        if (sensorManager != null) {
+
+            sensorManager.unregisterListener(
+                    this);
+        }
+    }
+
+    @Override
+    public void onSensorChanged(
+            SensorEvent event) {
+
+        if (event.sensor.getType() !=
+                Sensor.TYPE_GYROSCOPE) {
+            return;
+        }
+
+        long now =
+                System.currentTimeMillis();
+
+        if (now - lastReflectionUpdate < 300) {
+            return;
+        }
+
+        float rotation =
+                event.values[1];
+
+        int reflection;
+
+        if (rotation > 0.35f) {
+
+            reflection = 2;
+
+        } else if (rotation < -0.35f) {
+
+            reflection = 0;
+
+        } else {
+
+            reflection = 1;
+        }
+
+        if (reflection != currentReflection) {
+
+            currentReflection = reflection;
+            lastReflectionUpdate = now;
+
+            sendReflectionUpdate(
+                    reflection);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(
+            Sensor sensor,
+            int accuracy) {
+    }
+
+    private void sendReflectionUpdate(
+            int reflection) {
+
+        Intent intent =
+                new Intent(
+                        this,
+                        AstraWidgetProvider.class);
+
+        intent.setAction(
+                "com.astrawidgets.ACTION_REFLECTION");
+
+        intent.putExtra(
+                "reflection",
+                reflection);
+
+        sendBroadcast(intent);
+    }
+    }
+
+
+
