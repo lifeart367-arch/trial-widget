@@ -352,7 +352,7 @@ attachRefreshButton(
                                 R.layout.widget_layout);
 attachRefreshButton(
         context,
-        updatedViews,
+        errorViews,
         widgetId);
                 errorViews.setTextViewText(
                         R.id.widget_temperature,
