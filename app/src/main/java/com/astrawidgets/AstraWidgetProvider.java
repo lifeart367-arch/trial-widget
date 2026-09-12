@@ -264,6 +264,22 @@ views.setOnClickPendingIntent(
                         new RemoteViews(
                                 context.getPackageName(),
                                 R.layout.widget_layout);
+Intent refreshIntent =
+        new Intent(context, AstraWidgetProvider.class);
+
+refreshIntent.setAction(ACTION_REFRESH);
+
+PendingIntent refreshPendingIntent =
+        PendingIntent.getBroadcast(
+                context,
+                widgetId,
+                refreshIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+                        | PendingIntent.FLAG_IMMUTABLE);
+
+updatedViews.setOnClickPendingIntent(
+        R.id.widget_refresh,
+        refreshPendingIntent);
 
                 // DATE
 
@@ -358,7 +374,22 @@ views.setOnClickPendingIntent(
                         new RemoteViews(
                                 context.getPackageName(),
                                 R.layout.widget_layout);
+Intent refreshIntent =
+        new Intent(context, AstraWidgetProvider.class);
 
+refreshIntent.setAction(ACTION_REFRESH);
+
+PendingIntent refreshPendingIntent =
+        PendingIntent.getBroadcast(
+                context,
+                widgetId,
+                refreshIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+                        | PendingIntent.FLAG_IMMUTABLE);
+
+errorViews.setOnClickPendingIntent(
+        R.id.widget_refresh,
+        refreshPendingIntent);
                 errorViews.setTextViewText(
                         R.id.widget_temperature,
                         "—°");
