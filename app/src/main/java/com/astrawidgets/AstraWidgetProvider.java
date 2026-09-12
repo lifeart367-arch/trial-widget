@@ -536,4 +536,29 @@ errorViews.setOnClickPendingIntent(
 
         return R.drawable.weather_cloudy;
     }
+private void attachRefreshButton(
+        Context context,
+        RemoteViews views,
+        int widgetId) {
+
+    Intent refreshIntent =
+            new Intent(
+                    context,
+                    AstraWidgetProvider.class);
+
+    refreshIntent.setAction(
+            ACTION_REFRESH);
+
+    PendingIntent refreshPendingIntent =
+            PendingIntent.getBroadcast(
+                    context,
+                    widgetId,
+                    refreshIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                            | PendingIntent.FLAG_IMMUTABLE);
+
+    views.setOnClickPendingIntent(
+            R.id.widget_refresh,
+            refreshPendingIntent);
+}
 }
