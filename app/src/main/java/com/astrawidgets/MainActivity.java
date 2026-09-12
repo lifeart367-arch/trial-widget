@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.appwidget.AppWidgetManager;
-import android.widget.EditText;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.LinearLayout;
-import android.view.Gravity;
-import android.view.View;
+import android.content.ComponentName;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.view.Gravity;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,6 +29,13 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends Activity {
 
+    private static final int BG = Color.rgb(7, 13, 31);
+    private static final int CARD = Color.rgb(18, 28, 54);
+    private static final int TEXT = Color.rgb(244, 247, 255);
+    private static final int MUTED = Color.rgb(166, 178, 211);
+    private static final int BLUE = Color.rgb(76, 145, 255);
+    private static final int PURPLE = Color.rgb(108, 82, 255);
+
     private EditText cityInput;
     private TextView resultText;
     private LinearLayout resultsLayout;
@@ -33,83 +43,354 @@ public class MainActivity extends Activity {
     private final ExecutorService executor =
             Executors.newSingleThreadExecutor();
 
+    private int dp(float value) {
+        return (int) (value *
+                getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    private GradientDrawable roundedBackground(
+            int color,
+            float radius) {
+
+        GradientDrawable drawable =
+                new GradientDrawable();
+
+        drawable.setColor(color);
+        drawable.setCornerRadius(dp(radius));
+
+        return drawable;
+    }
+
+    private GradientDrawable gradientBackground(
+            int start,
+            int end,
+            float radius) {
+
+        GradientDrawable drawable =
+                new GradientDrawable(
+                        GradientDrawable.Orientation.TL_BR,
+                        new int[]{start, end});
+
+        drawable.setCornerRadius(dp(radius));
+
+        return drawable;
+    }
+
+    private TextView label(
+            String text,
+            float size,
+            int color) {
+
+        TextView view = new TextView(this);
+
+        view.setText(text);
+        view.setTextSize(size);
+        view.setTextColor(color);
+        view.setTypeface(
+                Typeface.create(
+                        "sans-serif",
+                        Typeface.NORMAL));
+
+        return view;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(40, 50, 40, 40);
-        root.setBackgroundColor(Color.rgb(20, 20, 25));
+        getWindow().setStatusBarColor(BG);
+        getWindow().setNavigationBarColor(BG);
 
-        TextView title = new TextView(this);
-        title.setText("Astra Widgets");
-        title.setTextSize(30);
-        title.setTextColor(Color.WHITE);
-        title.setGravity(Gravity.CENTER);
+        ScrollView scrollView =
+                new ScrollView(this);
+
+        scrollView.setFillViewport(true);
+        scrollView.setBackgroundColor(BG);
+
+        LinearLayout root =
+                new LinearLayout(this);
+
+        root.setOrientation(
+                LinearLayout.VERTICAL);
+
+        root.setPadding(
+                dp(22),
+                dp(30),
+                dp(22),
+                dp(24));
+
+        root.setBackgroundColor(BG);
+
+        scrollView.addView(root);
+
+        // HEADER
+
+        TextView title =
+                label(
+                        "Astra Widgets",
+                        32,
+                        TEXT);
+
+        title.setTypeface(
+                Typeface.create(
+                        "sans-serif",
+                        Typeface.BOLD));
 
         root.addView(title);
 
-        TextView subtitle = new TextView(this);
-        subtitle.setText("Choose your weather location");
-        subtitle.setTextSize(16);
-        subtitle.setTextColor(Color.LTGRAY);
-        subtitle.setGravity(Gravity.CENTER);
+        TextView subtitle =
+                label(
+                        "Beautiful weather, always with you",
+                        16,
+                        MUTED);
 
         LinearLayout.LayoutParams subtitleParams =
                 new LinearLayout.LayoutParams(
                         -1,
                         -2);
 
-        subtitleParams.setMargins(0, 15, 0, 30);
-        root.addView(subtitle, subtitleParams);
+        subtitleParams.topMargin = dp(5);
 
-        cityInput = new EditText(this);
-        cityInput.setHint("Enter city name");
-        cityInput.setTextColor(Color.WHITE);
-        cityInput.setHintTextColor(Color.GRAY);
-        cityInput.setSingleLine(true);
+        root.addView(
+                subtitle,
+                subtitleParams);
 
-        root.addView(cityInput);
+        // HERO CARD
 
-        Button searchButton = new Button(this);
-        searchButton.setText("Search");
+        LinearLayout hero =
+                new LinearLayout(this);
 
-        LinearLayout.LayoutParams buttonParams =
+        hero.setOrientation(
+                LinearLayout.VERTICAL);
+
+        hero.setPadding(
+                dp(20),
+                dp(18),
+                dp(20),
+                dp(18));
+
+        hero.setBackground(
+                gradientBackground(
+                        Color.rgb(22, 51, 100),
+                        Color.rgb(47, 55, 112),
+                        24));
+
+        TextView heroTitle =
+                label(
+                        "Choose your place",
+                        21,
+                        TEXT);
+
+        heroTitle.setTypeface(
+                Typeface.create(
+                        "sans-serif",
+                        Typeface.BOLD));
+
+        hero.addView(heroTitle);
+
+        TextView heroText =
+                label(
+                        "Search for a city and make your home-screen widget yours.",
+                        14,
+                        Color.rgb(205, 216, 242));
+
+        LinearLayout.LayoutParams heroTextParams =
                 new LinearLayout.LayoutParams(
                         -1,
                         -2);
 
-        buttonParams.setMargins(0, 15, 0, 20);
-        root.addView(searchButton, buttonParams);
+        heroTextParams.topMargin = dp(6);
 
-        resultText = new TextView(this);
-        resultText.setText("");
-        resultText.setTextSize(16);
-        resultText.setTextColor(Color.LTGRAY);
+        hero.addView(
+                heroText,
+                heroTextParams);
 
-        root.addView(resultText);
+        LinearLayout.LayoutParams heroParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        -2);
 
-        resultsLayout = new LinearLayout(this);
-        resultsLayout.setOrientation(LinearLayout.VERTICAL);
+        heroParams.topMargin = dp(24);
 
-        root.addView(resultsLayout);
+        root.addView(
+                hero,
+                heroParams);
 
-        searchButton.setOnClickListener(v -> searchCity());
+        // SEARCH FIELD
 
-        setContentView(root);
+        cityInput =
+                new EditText(this);
+
+        cityInput.setHint(
+                "  Search city...");
+
+        cityInput.setHintTextColor(
+                Color.rgb(
+                        130,
+                        145,
+                        180));
+
+        cityInput.setTextColor(TEXT);
+        cityInput.setTextSize(17);
+        cityInput.setSingleLine(true);
+
+        cityInput.setPadding(
+                dp(16),
+                0,
+                dp(16),
+                0);
+
+        cityInput.setBackground(
+                roundedBackground(
+                        CARD,
+                        18));
+
+        LinearLayout.LayoutParams inputParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        dp(58));
+
+        inputParams.topMargin = dp(18);
+
+        root.addView(
+                cityInput,
+                inputParams);
+
+        // SEARCH BUTTON
+
+        Button searchButton =
+                new Button(this);
+
+        searchButton.setText(
+                "Search locations");
+
+        searchButton.setTextSize(16);
+
+        searchButton.setTextColor(
+                Color.WHITE);
+
+        searchButton.setTypeface(
+                Typeface.create(
+                        "sans-serif",
+                        Typeface.BOLD));
+
+        searchButton.setAllCaps(false);
+
+        searchButton.setGravity(
+                Gravity.CENTER);
+
+        searchButton.setPadding(
+                0,
+                0,
+                0,
+                0);
+
+        searchButton.setBackground(
+                gradientBackground(
+                        BLUE,
+                        PURPLE,
+                        18));
+
+        LinearLayout.LayoutParams buttonParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        dp(56));
+
+        buttonParams.topMargin = dp(12);
+
+        root.addView(
+                searchButton,
+                buttonParams);
+
+        // RESULT STATUS
+
+        resultText =
+                label(
+                        "",
+                        15,
+                        MUTED);
+
+        LinearLayout.LayoutParams resultParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        -2);
+
+        resultParams.topMargin = dp(22);
+
+        root.addView(
+                resultText,
+                resultParams);
+
+        // RESULTS
+
+        resultsLayout =
+                new LinearLayout(this);
+
+        resultsLayout.setOrientation(
+                LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams resultsParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        -2);
+
+        resultsParams.topMargin = dp(8);
+
+        root.addView(
+                resultsLayout,
+                resultsParams);
+
+        // FOOTER
+
+        TextView footer =
+                label(
+                        "Astra Widgets  •  Weather looks better here.",
+                        13,
+                        Color.rgb(
+                                105,
+                                120,
+                                155));
+
+        footer.setGravity(
+                Gravity.CENTER);
+
+        LinearLayout.LayoutParams footerParams =
+                new LinearLayout.LayoutParams(
+                        -1,
+                        -2);
+
+        footerParams.topMargin = dp(28);
+
+        root.addView(
+                footer,
+                footerParams);
+
+        searchButton.setOnClickListener(
+                v -> searchCity());
+
+        setContentView(scrollView);
     }
 
     private void searchCity() {
 
-        String city = cityInput.getText().toString().trim();
+        String city =
+                cityInput
+                        .getText()
+                        .toString()
+                        .trim();
 
         if (city.isEmpty()) {
-            resultText.setText("Please enter a city.");
+
+            resultText.setText(
+                    "Please enter a city name.");
+
             return;
         }
 
-        resultText.setText("Searching...");
+        resultText.setText(
+                "Searching for places...");
+
         resultsLayout.removeAllViews();
 
         executor.execute(() -> {
@@ -117,21 +398,30 @@ public class MainActivity extends Activity {
             try {
 
                 String encodedCity =
-                        URLEncoder.encode(city, "UTF-8");
+                        URLEncoder.encode(
+                                city,
+                                "UTF-8");
 
-                URL url = new URL(
-                        "https://geocoding-api.open-meteo.com/v1/search"
-                        + "?name=" + encodedCity
-                        + "&count=5"
-                        + "&language=en"
-                        + "&format=json");
+                URL url =
+                        new URL(
+                                "https://geocoding-api.open-meteo.com/v1/search"
+                                + "?name=" + encodedCity
+                                + "&count=5"
+                                + "&language=en"
+                                + "&format=json");
 
                 HttpURLConnection connection =
-                        (HttpURLConnection) url.openConnection();
+                        (HttpURLConnection)
+                                url.openConnection();
 
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(10000);
-                connection.setReadTimeout(10000);
+
+                connection.setConnectTimeout(
+                        10000);
+
+                connection.setReadTimeout(
+                        10000);
+
                 connection.setRequestProperty(
                         "User-Agent",
                         "AstraWidgets/1.0");
@@ -139,7 +429,9 @@ public class MainActivity extends Activity {
                 int responseCode =
                         connection.getResponseCode();
 
-                if (responseCode != HttpURLConnection.HTTP_OK) {
+                if (responseCode !=
+                        HttpURLConnection.HTTP_OK) {
+
                     throw new Exception(
                             "Search failed: HTTP "
                                     + responseCode);
@@ -148,14 +440,17 @@ public class MainActivity extends Activity {
                 BufferedReader reader =
                         new BufferedReader(
                                 new InputStreamReader(
-                                        connection.getInputStream()));
+                                        connection
+                                                .getInputStream()));
 
                 StringBuilder response =
                         new StringBuilder();
 
                 String line;
 
-                while ((line = reader.readLine()) != null) {
+                while ((line =
+                        reader.readLine()) != null) {
+
                     response.append(line);
                 }
 
@@ -163,26 +458,29 @@ public class MainActivity extends Activity {
                 connection.disconnect();
 
                 JSONObject json =
-                        new JSONObject(response.toString());
+                        new JSONObject(
+                                response.toString());
 
                 JSONArray results =
-                        json.optJSONArray("results");
+                        json.optJSONArray(
+                                "results");
 
                 runOnUiThread(() -> {
 
-                    resultsLayout.removeAllViews();
+                    resultsLayout
+                            .removeAllViews();
 
                     if (results == null ||
                             results.length() == 0) {
 
                         resultText.setText(
-                                "No cities found.");
+                                "No locations found. Try another city.");
 
                         return;
                     }
 
                     resultText.setText(
-                            "Select a location:");
+                            "Search results");
 
                     for (int i = 0;
                          i < results.length();
@@ -194,7 +492,8 @@ public class MainActivity extends Activity {
                                     results.getJSONObject(i);
 
                             String name =
-                                    place.getString("name");
+                                    place.getString(
+                                            "name");
 
                             String country =
                                     place.optString(
@@ -214,39 +513,120 @@ public class MainActivity extends Activity {
                                     place.getDouble(
                                             "longitude");
 
-                            TextView cityView =
-                                    new TextView(this);
+                            LinearLayout card =
+                                    new LinearLayout(
+                                            this);
 
-                            cityView.setText(
-                                    name
-                                    + "\n"
-                                    + admin
-                                    + ", "
-                                    + country);
+                            card.setOrientation(
+                                    LinearLayout.HORIZONTAL);
 
-                            cityView.setTextSize(18);
-                            cityView.setTextColor(
-                                    Color.WHITE);
-                            cityView.setPadding(
-                                    25, 25, 25, 25);
+                            card.setGravity(
+                                    Gravity.CENTER_VERTICAL);
 
-                            cityView.setBackgroundColor(
-                                    Color.rgb(
-                                            45, 45, 55));
+                            card.setPadding(
+                                    dp(18),
+                                    dp(14),
+                                    dp(14),
+                                    dp(14));
 
-                            LinearLayout.LayoutParams params =
+                            card.setBackground(
+                                    roundedBackground(
+                                            CARD,
+                                            18));
+
+                            card.setClickable(true);
+                            card.setFocusable(true);
+
+                            LinearLayout textBox =
+                                    new LinearLayout(
+                                            this);
+
+                            textBox.setOrientation(
+                                    LinearLayout.VERTICAL);
+
+                            TextView nameView =
+                                    label(
+                                            name,
+                                            18,
+                                            TEXT);
+
+                            nameView.setTypeface(
+                                    Typeface.create(
+                                            "sans-serif",
+                                            Typeface.BOLD));
+
+                            textBox.addView(
+                                    nameView);
+
+                            String location =
+                                    admin;
+
+                            if (!admin.isEmpty()
+                                    && !country.isEmpty()) {
+
+                                location += ", ";
+                            }
+
+                            location += country;
+
+                            TextView detailView =
+                                    label(
+                                            location,
+                                            14,
+                                            MUTED);
+
+                            LinearLayout.LayoutParams
+                                    detailParams =
                                     new LinearLayout.LayoutParams(
                                             -1,
                                             -2);
 
-                            params.setMargins(
-                                    0, 8, 0, 8);
+                            detailParams.topMargin =
+                                    dp(3);
+
+                            textBox.addView(
+                                    detailView,
+                                    detailParams);
+
+                            card.addView(
+                                    textBox,
+                                    new LinearLayout.LayoutParams(
+                                            0,
+                                            -2,
+                                            1));
+
+                            TextView arrow =
+                                    label(
+                                            "›",
+                                            30,
+                                            Color.rgb(
+                                                    130,
+                                                    153,
+                                                    210));
+
+                            arrow.setGravity(
+                                    Gravity.CENTER);
+
+                            card.addView(
+                                    arrow,
+                                    new LinearLayout.LayoutParams(
+                                            dp(35),
+                                            -1));
+
+                            LinearLayout.LayoutParams
+                                    cardParams =
+                                    new LinearLayout.LayoutParams(
+                                            -1,
+                                            -2);
+
+                            cardParams.topMargin =
+                                    dp(8);
 
                             resultsLayout.addView(
-                                    cityView,
-                                    params);
+                                    card,
+                                    cardParams);
 
-                            cityView.setOnClickListener(
+                            card.setOnClickListener(
                                     v -> saveLocation(
                                             name,
                                             latitude,
@@ -279,7 +659,9 @@ public class MainActivity extends Activity {
                         MODE_PRIVATE);
 
         preferences.edit()
-                .putString("city", name)
+                .putString(
+                        "city",
+                        name)
                 .putFloat(
                         "latitude",
                         (float) latitude)
@@ -289,16 +671,40 @@ public class MainActivity extends Activity {
                 .apply();
 
         resultText.setText(
-                "Location saved: " + name);
+                "✓ Location saved: " + name);
 
         resultsLayout.removeAllViews();
 
-        Intent intent =
-                new Intent(
-                        "android.appwidget.action.APPWIDGET_UPDATE");
+        // Immediately refresh every existing Astra Widget.
 
-        intent.setPackage(getPackageName());
+        AppWidgetManager widgetManager =
+                AppWidgetManager.getInstance(
+                        this);
 
-        sendBroadcast(intent);
+        ComponentName provider =
+                new ComponentName(
+                        this,
+                        AstraWidgetProvider.class);
+
+        int[] widgetIds =
+                widgetManager.getAppWidgetIds(
+                        provider);
+
+        if (widgetIds.length > 0) {
+
+            Intent intent =
+                    new Intent(
+                            AppWidgetManager
+                                    .ACTION_APPWIDGET_UPDATE);
+
+            intent.setComponent(provider);
+
+            intent.putExtra(
+                    AppWidgetManager
+                            .EXTRA_APPWIDGET_IDS,
+                    widgetIds);
+
+            sendBroadcast(intent);
+        }
     }
 }
