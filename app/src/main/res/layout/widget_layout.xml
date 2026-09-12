@@ -10,45 +10,55 @@
     android:padding="18dp"
     android:background="@drawable/weather_clear">
 
+    <!-- Live clock -->
     <TextClock
         android:id="@+id/widget_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:03"
+        android:text="08:07"
         android:textColor="#FFFFFF"
-        android:textSize="34sp"
+        android:textSize="38sp"
         android:textStyle="bold"
+        android:fontFamily="sans"
         android:includeFontPadding="false"
         android:format24Hour="HH:mm"
-        android:format12Hour="hh:mm a"  />
+        android:format12Hour="hh:mm a" />
 
+    <!-- Date -->
     <TextView
         android:id="@+id/widget_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Sat, 12 Sept"
-        android:textColor="#E8EEF5"
-        android:textSize="14sp" />
+        android:textColor="#DCE7F5"
+        android:textSize="14sp"
+        android:fontFamily="sans"
+        android:includeFontPadding="false" />
 
+    <!-- Location -->
     <TextView
         android:id="@+id/widget_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="Bhubaneswar"
+        android:layout_marginTop="20dp"
+        android:text="Narla"
         android:textColor="#FFFFFF"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:fontFamily="sans"
         android:includeFontPadding="false" />
 
+    <!-- Temperature + condition -->
     <TextView
         android:id="@+id/widget_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="25°C • Showers"
-        android:textColor="#F2F6FA"
-        android:textSize="15sp" />
+        android:text="25°C • Rain"
+        android:textColor="#F5F8FC"
+        android:textSize="17sp"
+        android:fontFamily="sans"
+        android:includeFontPadding="false" />
 
 </LinearLayout>
