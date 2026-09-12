@@ -40,28 +40,7 @@ public class AstraWidgetProvider extends AppWidgetProvider {
             AppWidgetManager manager,
             int widgetId) {
 
-        RemoteViews views =
-                new RemoteViews(
-                        context.getPackageName(),
-                        R.layout.widget_layout);
-
-        
-
-        String date = new SimpleDateFormat(
-                "EEE, dd MMM",
-                Locale.getDefault()).format(new Date());
-
-        
-        views.setTextViewText(R.id.widget_date, date);
-        views.setTextViewText(R.id.widget_location, city);
-        views.setTextViewText(R.id.widget_temperature, "Loading...");
-
-        manager.updateAppWidget(widgetId, views);
-
-        EXECUTOR.execute(() -> {
-            try {
-
-                SharedPreferences preferences =
+        SharedPreferences preferences =
         context.getSharedPreferences(
                 "astra_weather",
                 Context.MODE_PRIVATE);
@@ -80,6 +59,26 @@ float longitude =
         preferences.getFloat(
                 "longitude",
                 85.8245f);
+
+RemoteViews views =
+        new RemoteViews(
+                context.getPackageName(),
+                R.layout.widget_layout);
+
+String date = new SimpleDateFormat(
+        "EEE, dd MMM",
+        Locale.getDefault()).format(new Date());
+
+views.setTextViewText(R.id.widget_date, date);
+views.setTextViewText(R.id.widget_location, city);
+views.setTextViewText(R.id.widget_temperature, "Loading...");
+
+manager.updateAppWidget(widgetId, views);
+
+        EXECUTOR.execute(() -> {
+            try {
+
+                
 
 URL url = new URL(
         "https://api.open-meteo.com/v1/forecast"
