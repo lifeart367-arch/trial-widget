@@ -107,7 +107,16 @@ private int currentReflection = 1;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+sensorManager =
+        (SensorManager) getSystemService(
+                SENSOR_SERVICE);
 
+if (sensorManager != null) {
+
+    gyroscope =
+            sensorManager.getDefaultSensor(
+                    Sensor.TYPE_GYROSCOPE);
+}
         getWindow().setStatusBarColor(BG);
         getWindow().setNavigationBarColor(BG);
 
