@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners android:radius="28dp" />
+    <!-- Atmospheric cloudy base -->
+    <item>
+        <shape android:shape="rectangle">
 
-    <gradient
-        android:angle="135"
-        android:startColor="#26364A"
-        android:centerColor="#526579"
-        android:endColor="#8998A8" />
+            <gradient
+                android:angle="135"
+                android:startColor="#172638"
+                android:centerColor="#40566B"
+                android:endColor="#7F92A3" />
 
-</shape>
+            <corners android:radius="28dp" />
+
+        </shape>
+    </item>
+
+    <!-- Diffused sky light -->
+    <item
+        android:left="-45dp"
+        android:top="-50dp"
+        android:right="75dp"
+        android:bottom="55dp">
+
+        <shape android:shape="oval">
+
+            <gradient
+                android:type="radial"
+                android:centerX="50%"
+                android:centerY="50%"
+                android:gradientRadius="125dp"
+                android:startColor="#35FFFFFF"
+                android:endColor="#00FFFFFF" />
+
+        </shape>
+
+    </item>
+
+    <!-- Cool lower haze -->
+    <item
+        android:left="65dp"
+        android:top="70dp"
+        android:right="-55dp"
+        android:bottom="-55dp">
+
+        <shape android:shape="oval">
+
+            <gradient
+                android:type="radial"
+                android:centerX="50%"
+                android:centerY="50%"
+                android:gradientRadius="120dp"
+                android:startColor="#20FFFFFF"
+                android:endColor="#00FFFFFF" />
+
+        </shape>
+
+    </item>
+
+</layer-list>
