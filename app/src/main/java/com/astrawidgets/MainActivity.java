@@ -9,6 +9,10 @@ import android.content.ComponentName;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +31,8 @@ import java.net.URLEncoder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+        implements SensorEventListener {
 
     private static final int BG = Color.rgb(7, 13, 31);
     private static final int CARD = Color.rgb(18, 28, 54);
@@ -39,7 +44,11 @@ public class MainActivity extends Activity {
     private EditText cityInput;
     private TextView resultText;
     private LinearLayout resultsLayout;
+private SensorManager sensorManager;
+private Sensor gyroscope;
 
+private long lastReflectionUpdate = 0;
+private int currentReflection = 1;
     private final ExecutorService executor =
             Executors.newSingleThreadExecutor();
 
