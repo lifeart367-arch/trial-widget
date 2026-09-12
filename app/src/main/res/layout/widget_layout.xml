@@ -25,15 +25,16 @@
             android:textSize="13sp"
             android:includeFontPadding="false" />
 
-       <TextView
+       
+<TextClock
     android:id="@+id/widget_time"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="08:51"
     android:textColor="#FFFFFF"
     android:textSize="23sp"
-    android:textStyle="bold" />
-
+    android:textStyle="bold"
+    android:format24Hour="HH:mm"
+    android:format12Hour="hh:mm" />
     </LinearLayout>
 
     <LinearLayout
