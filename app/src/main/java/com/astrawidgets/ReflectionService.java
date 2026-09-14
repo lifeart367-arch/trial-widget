@@ -106,68 +106,93 @@ public class ReflectionService extends Service
     }
 
     @Override
-    public void onSensorChanged(
-            SensorEvent event) {
+public void onSensorChanged(
+        SensorEvent event) {
 
-        if (event.sensor.getType() !=
-                Sensor.TYPE_GYROSCOPE) {
+    if (event.sensor.getType() !=
+            Sensor.TYPE_GYROSCOPE) {
 
-            return;
-        }
-
-        long now =
-                System.currentTimeMillis();
-
-        if (now - lastReflectionUpdate < 300) {
-            return;
-        }
-
-        float rotation =
-                event.values[0];
-
-        int reflection;
-
-        if (rotation > 0.15f) {
-
-            reflection = 2;
-
-        } else if (rotation < -0.15f) {
-
-            reflection = 0;
-
-        } else {
-
-            reflection = 1;
-        }
-
-        if (reflection != currentReflection) {
-
-            currentReflection = reflection;
-            lastReflectionUpdate = now;
-
-            sendReflectionUpdate(
-                    reflection);
-        }
+        return;
     }
 
+    long now =
+            System.currentTimeMillis();
+
+    if (now - lastReflectionUpdate < 50) {
+        return;
+    }
+
+    float rotation =
+            event.values[0];
+
+    /*
+     * Convert gyroscope movement into
+     * a subtle reflection intensity.
+     *
+     * Small movements produce a gentle shine.
+     * Strong movements produce a slightly
+     * brighter rim.
+     */
+    float movement =
+            Math.abs(rotation);
+
+    float targetAlpha =
+            0.18f +
+            Math.min(
+                    movement * 0.45f,
+                    0.45f);
+
+    /*
+     * Smooth the transition instead of
+     * jumping directly to the new value.
+     */
+    float currentAlpha =
+            getSharedPreferences(
+                    "astra_weather",
+                    MODE_PRIVATE)
+                    .getFloat(
+                            "reflection_alpha",
+                            0.22f);
+
+    float smoothedAlpha =
+            currentAlpha +
+            (targetAlpha - currentAlpha)
+                    * 0.18f;
+
+    /*
+     * Ignore extremely tiny changes.
+     * This prevents flickering.
+     */
+    if (Math.abs(
+            smoothedAlpha -
+            currentAlpha) < 0.008f) {
+
+        return;
+    }
+
+    lastReflectionUpdate =
+            now;
+
+    sendReflectionUpdate(
+            smoothedAlpha);
+}
     private void sendReflectionUpdate(
-            int reflection) {
+        float reflectionAlpha) {
 
-        Intent intent =
-                new Intent(
-                        this,
-                        AstraWidgetProvider.class);
+    Intent intent =
+            new Intent(
+                    this,
+                    AstraWidgetProvider.class);
 
-        intent.setAction(
-                "com.astrawidgets.ACTION_REFLECTION");
+    intent.setAction(
+            "com.astrawidgets.ACTION_REFLECTION");
 
-        intent.putExtra(
-                "reflection",
-                reflection);
+    intent.putExtra(
+            "reflection_alpha",
+            reflectionAlpha);
 
-        sendBroadcast(intent);
-    }
-
+    sendBroadcast(intent);
+}
     @Override
     public void onAccuracyChanged(
             Sensor sensor,
