@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.os.Build;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -107,17 +108,23 @@ private int currentReflection = 1;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-sensorManager =
-        (SensorManager) getSystemService(
-                SENSOR_SERVICE);
+Intent reflectionServiceIntent =
+        new Intent(
+                this,
+                ReflectionService.class);
 
-if (sensorManager != null) {
+if (Build.VERSION.SDK_INT >=
+        Build.VERSION_CODES.O) {
 
-    gyroscope =
-            sensorManager.getDefaultSensor(
-                    Sensor.TYPE_GYROSCOPE);
+    startForegroundService(
+            reflectionServiceIntent);
+
+} else {
+
+    startService(
+            reflectionServiceIntent);
 }
-        getWindow().setStatusBarColor(BG);
+       getWindow().setStatusBarColor(BG);
         getWindow().setNavigationBarColor(BG);
 
         ScrollView scrollView =
