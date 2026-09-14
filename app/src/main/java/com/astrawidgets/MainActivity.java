@@ -769,15 +769,15 @@ if (sensorManager != null) {
         }
 
         float rotation =
-                event.values[1];
+                event.values[0];
 
         int reflection;
 
-        if (rotation > 0.35f) {
+        if (rotation > 0.15f) {
 
             reflection = 2;
 
-        } else if (rotation < -0.35f) {
+        } else if (rotation < -0.15f) {
 
             reflection = 0;
 
