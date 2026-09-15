@@ -57,14 +57,15 @@ public void onReceive(
 
 if (ACTION_REFLECTION.equals(intent.getAction())) {
 
-    int reflection =
-            intent.getIntExtra(
-                    "reflection",
-                    1);
+    float reflectionAlpha =
+            intent.getFloatExtra(
+                    "reflection_alpha",
+                    0.22f);
 
     updateReflection(
             context,
-            reflection);
+            reflectionAlpha);
+}
 }
 }
     @Override
@@ -557,39 +558,26 @@ private void applyReflection(
                     "astra_weather",
                     Context.MODE_PRIVATE);
 
-    int reflection =
-            preferences.getInt(
-                    "reflection",
-                    1);
-
-    int drawable;
-
-    if (reflection == 0) {
-
-        drawable =
-                R.drawable.widget_reflection_left;
-
-    } else if (reflection == 2) {
-
-        drawable =
-                R.drawable.widget_reflection_right;
-
-    } else {
-
-        drawable =
-                R.drawable.widget_reflection;
-    }
+    float alpha =
+            preferences.getFloat(
+                    "reflection_alpha",
+                    0.22f);
 
     views.setImageViewResource(
             R.id.widget_reflection,
-            drawable);
+            R.drawable.widget_reflection);
+
+    views.setViewAlpha(
+            R.id.widget_reflection,
+            alpha);
 }
 private void updateReflection(
         Context context,
-        int reflection) {
+        float reflectionAlpha) {
 
     AppWidgetManager manager =
-            AppWidgetManager.getInstance(context);
+            AppWidgetManager.getInstance(
+                    context);
 
     android.content.ComponentName component =
             new android.content.ComponentName(
@@ -597,29 +585,49 @@ private void updateReflection(
                     AstraWidgetProvider.class);
 
     int[] widgetIds =
-            manager.getAppWidgetIds(component);
+            manager.getAppWidgetIds(
+                    component);
 
     if (widgetIds.length == 0) {
         return;
     }
 
-    int drawable;
+    float alpha =
+            Math.max(
+                    0.12f,
+                    Math.min(
+                            0.65f,
+                            reflectionAlpha));
 
-    if (reflection == 0) {
+    context.getSharedPreferences(
+            "astra_weather",
+            Context.MODE_PRIVATE)
+            .edit()
+            .putFloat(
+                    "reflection_alpha",
+                    alpha)
+            .apply();
 
-        drawable =
-                R.drawable.widget_reflection_left;
+    RemoteViews views =
+            new RemoteViews(
+                    context.getPackageName(),
+                    R.layout.widget_layout);
 
-    } else if (reflection == 2) {
+    views.setImageViewResource(
+            R.id.widget_reflection,
+            R.drawable.widget_reflection);
 
-        drawable =
-                R.drawable.widget_reflection_right;
+    views.setViewAlpha(
+            R.id.widget_reflection,
+            alpha);
 
-    } else {
+    for (int widgetId : widgetIds) {
 
-        drawable =
-                R.drawable.widget_reflection;
+        manager.partiallyUpdateAppWidget(
+                widgetId,
+                views);
     }
+}
 
     // Remember the reflection position.
     context.getSharedPreferences(
