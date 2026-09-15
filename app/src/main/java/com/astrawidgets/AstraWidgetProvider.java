@@ -629,24 +629,7 @@ private void updateReflection(
     }
 }
 
-    // Remember the reflection position.
-    context.getSharedPreferences(
-            "astra_weather",
-            Context.MODE_PRIVATE)
-            .edit()
-            .putInt(
-                    "reflection",
-                    reflection)
-            .apply();
-
-    RemoteViews views =
-            new RemoteViews(
-                    context.getPackageName(),
-                    R.layout.widget_layout);
-
-    views.setImageViewResource(
-            R.id.widget_reflection,
-            drawable);
+    
 
     for (int widgetId : widgetIds) {
 
