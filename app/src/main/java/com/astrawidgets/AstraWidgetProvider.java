@@ -621,13 +621,7 @@ private void updateReflection(
             R.id.widget_reflection,
             alpha);
 
-    for (int widgetId : widgetIds) {
-
-        manager.partiallyUpdateAppWidget(
-                widgetId,
-                views);
-    }
-}
+    
 
     
 
