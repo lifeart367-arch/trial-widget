@@ -567,9 +567,10 @@ private void applyReflection(
             R.id.widget_reflection,
             R.drawable.widget_reflection);
 
-    views.setViewAlpha(
-            R.id.widget_reflection,
-            alpha);
+    views.setFloat(
+        R.id.widget_reflection,
+        "setAlpha",
+        alpha);
 }
 private void updateReflection(
         Context context,
@@ -617,9 +618,10 @@ private void updateReflection(
             R.id.widget_reflection,
             R.drawable.widget_reflection);
 
-    views.setViewAlpha(
-            R.id.widget_reflection,
-            alpha);
+    views.setFloat(
+        R.id.widget_reflection,
+        "setAlpha",
+        alpha);
 
     
 
