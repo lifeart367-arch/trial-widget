@@ -66,7 +66,7 @@ if (ACTION_REFLECTION.equals(intent.getAction())) {
             context,
             reflectionAlpha);
 }
-}
+
 }
     @Override
     public void onUpdate(
